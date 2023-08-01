@@ -13,3 +13,6 @@ jobs:
 
       - name: Print Mergeable Status
         run: echo "Is PR mergeable? ${{ steps.check_mergeable.outputs.is_mergeable }}"
+        
+      - name: Print Mergeable Status 2
+        run: echo "${{ steps.check_mergeable.outputs.is_mergeable }}"
