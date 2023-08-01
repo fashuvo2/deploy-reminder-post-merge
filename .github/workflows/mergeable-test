@@ -1,0 +1,15 @@
+name: Check Mergeable Status
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  check_mergeable_status:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR Mergeable Status
+        id: check_mergeable
+        run: echo "::set-output name=is_mergeable::${{ github.event.pull_request.mergeable }}"
+
+      - name: Print Mergeable Status
+        run: echo "Is PR mergeable? ${{ steps.check_mergeable.outputs.is_mergeable }}"
