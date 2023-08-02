@@ -1,4 +1,4 @@
-name: Check Mergeable Status
+name: Mergeability Check
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -7,12 +7,16 @@ jobs:
   check_mergeable_status:
     runs-on: ubuntu-latest
     steps:
-      - name: Before checking
-        run: echo "Before checking"
+      - name: Check PR Mergeable Status
+        id: check_mergeable
+        run: echo "::set-output name=is_mergeable::${{ github.event.pull_request.mergeable }}"
 
-      - name: Check mergeable status
-        if: github.event.pull_request.mergeable
-        run: echo "PR is mergeable"
+      # Add your desired actions based on the mergeable status.
+      # For example, you can use conditionals to perform different actions.
+      - name: Merge PR Automatically
+        if: steps.check_mergeable.outputs.is_mergeable == 'true'
+        run: echo "Merging the pull request"
 
-      - name: After checking
-        run: echo "After checking"
+      - name: Notify Team
+        if: steps.check_mergeable.outputs.is_mergeable == 'false'
+        run: echo "The pull request has conflicts and needs manual attention."
