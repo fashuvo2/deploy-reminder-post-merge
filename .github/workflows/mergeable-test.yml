@@ -16,3 +16,7 @@ jobs:
         
       - name: Print Mergeable Status 2
         run: echo "${{ steps.check_mergeable.outputs.mergeable }}"
+
+      - name: Check mergeable status
+        if: github.event.pull_request.mergeable
+        run: echo "PR is mergeable"
