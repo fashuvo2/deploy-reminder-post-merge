@@ -1,0 +1,22 @@
+name: Ping PR Author After Merge
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  ping_author:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if PR is merged
+        if: github.event.pull_request.merged == true
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          PR_AUTHOR=${{ github.event.pull_request.user.login }}
+          # You can customize the message to mention the PR author
+          MESSAGE="Congratulations, @$PR_AUTHOR! Your PR (#$PR_NUMBER) has been merged."
+          # Use the GitHub API to create a comment on the PR to ping the author
+          curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+               -H "Accept: application/vnd.github.v3+json" \
+               -d "{\"body\":\"$MESSAGE\"}" \
+               "https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/comments"
