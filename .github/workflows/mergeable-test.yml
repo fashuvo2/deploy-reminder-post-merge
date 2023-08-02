@@ -1,22 +1,26 @@
 name: Mergeability Check
+
 on:
   pull_request:
     types: [opened, synchronize, reopened]
 
 jobs:
-  check_mergeable_status:
+  check_mergeability:
     runs-on: ubuntu-latest
     steps:
-      - name: Check PR Mergeable Status
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check Mergeability
         id: check_mergeable
-        run: echo "::set-output name=is_mergeable::${{ github.event.pull_request.mergeable }}"
+        run: |
+          # Use GitHub API to get the PR details and check mergeable status
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          PR_MERGEABLE=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+                         -H "Accept: application/vnd.github.v3+json" \
+                         "https://api.github.com/repos/${{ github.repository }}/pulls/${PR_NUMBER}" \
+                         | jq '.mergeable')
+          echo "::set-output name=is_mergeable::$PR_MERGEABLE"
 
-      # Add your desired actions based on the mergeable status.
-      # For example, you can use conditionals to perform different actions.
-      - name: Merge PR Automatically
-        if: steps.check_mergeable.outputs.is_mergeable == 'true'
-        run: echo "Merging the pull request"
-
-      - name: Notify Team
-        if: steps.check_mergeable.outputs.is_mergeable == 'false'
-        run: echo "The pull request has conflicts and needs manual attention."
+      - name: Print Mergeability Status
+        run: echo "Is PR mergeable? ${{ steps.check_mergeable.outputs.is_mergeable }}"
