@@ -24,4 +24,13 @@ jobs:
 
       - name: Check merge status
         if: ${{ github.event.pull_request.merged }} == 'false'
-        run: echo "PR not merged"
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          PR_AUTHOR=${{ github.event.pull_request.user.login }}
+          # You can customize the message to mention the PR author
+          MESSAGE="hey @$PR_AUTHOR, Your PR (#$PR_NUMBER) has not been merged yet!"
+          # Use the GitHub API to create a comment on the PR to ping the author
+          curl -X POST -H "Authorization: Bearer ${{ secrets.PAT_TOKEN }}" \
+               -H "Accept: application/vnd.github.v3+json" \
+               -d "{\"body\":\"$MESSAGE\"}" \
+               "https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/comments"
