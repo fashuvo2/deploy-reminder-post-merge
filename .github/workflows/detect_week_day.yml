@@ -21,3 +21,7 @@ jobs:
           else
             echo "Today is not Wednesday."
           fi
+
+      - name: Checkout code
+        if: ${{ github.event.pull_request.merged }} == 'false'
+        run: echp "PR not merged"
