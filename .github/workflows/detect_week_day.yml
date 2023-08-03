@@ -28,7 +28,11 @@ jobs:
           PR_NUMBER=${{ github.event.pull_request.number }}
           PR_AUTHOR=${{ github.event.pull_request.user.login }}
           # You can customize the message to mention the PR author
-          MESSAGE="hey @$PR_AUTHOR, Your PR (#$PR_NUMBER) has not been merged yet!"
+          if [ "$day_of_week" -eq 3 ]; then
+            MESSAGE="hey @$PR_AUTHOR, Today is Wednesday!"
+          else
+            MESSAGE="hey @$PR_AUTHOR, Today is not Wednesday!"
+          fi
           # Use the GitHub API to create a comment on the PR to ping the author
           curl -X POST -H "Authorization: Bearer ${{ secrets.PAT_TOKEN }}" \
                -H "Accept: application/vnd.github.v3+json" \
