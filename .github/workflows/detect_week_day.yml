@@ -20,7 +20,7 @@ jobs:
           if [ "$day_of_week" -eq 5 ]; then
             MESSAGE="hey @$PR_AUTHOR, Today is Friday!"
           else
-            MESSAGE="Hey @$PR_AUTHOR, thanks for merging your PR! Don't forget to deploy it by following [these steps](https://github.com/Automattic/woocommerce-payments-server/#deploying)"
+            MESSAGE="Hey @$PR_AUTHOR, thanks for merging your PR! Don't forget to deploy it by following [these steps](https://github.com/Automattic/woocommerce-payments-server/#deploying)."
           fi
           # Use the GitHub API to create a comment on the PR to ping the author
           curl -X POST -H "Authorization: Bearer ${{ secrets.PAT_TOKEN }}" \
