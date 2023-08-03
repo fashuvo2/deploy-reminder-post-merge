@@ -24,4 +24,4 @@ jobs:
 
       - name: Checkout code
         if: ${{ github.event.pull_request.merged }} == 'false'
-        run: echp "PR not merged"
+        run: echo "PR not merged"
