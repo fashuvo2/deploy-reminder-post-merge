@@ -12,16 +12,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Check if today is Wednesday
-        run: |
-          # Get the current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-          day_of_week=$(date -u +'%w')
-          if [ "$day_of_week" -eq 3 ]; then
-            echo "Today is Wednesday!"
-          else
-            echo "Today is not Wednesday."
-          fi
-
       - name: Check merge status
         if: ${{ github.event.pull_request.merged }} == 'false'
         run: |
