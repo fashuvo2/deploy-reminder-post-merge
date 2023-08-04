@@ -1,4 +1,4 @@
-name: Detect Wednesday
+name: Deploy reminder
 
 on:
   pull_request:
@@ -13,12 +13,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Check merge status
-        if: ${{ github.event.pull_request.merged }} == 'false'
+        if: ${{ github.event.pull_request.merged }} == 'true'
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
           PR_AUTHOR=${{ github.event.pull_request.user.login }}
           if [ "$day_of_week" -eq 5 ]; then
-            MESSAGE="hey @$PR_AUTHOR, Today is Friday!"
+            MESSAGE="Hey @PR_AUTHOR, thanks for merging your PR! Please deploy it on Monday unless it's critical."
           else
             MESSAGE="Hey @$PR_AUTHOR, thanks for merging your PR! Don't forget to deploy it by following [these steps](https://github.com/Automattic/woocommerce-payments-server/#deploying)."
           fi
