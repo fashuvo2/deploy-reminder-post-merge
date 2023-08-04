@@ -17,6 +17,8 @@ jobs:
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
           PR_AUTHOR=${{ github.event.pull_request.user.login }}
+          # Get the current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+          day_of_week=$(date -u +'%w')
           if [ "$day_of_week" -eq 5 ]; then
             MESSAGE="Today is Friday!"
           else
