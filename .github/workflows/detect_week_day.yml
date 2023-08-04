@@ -23,7 +23,7 @@ jobs:
             MESSAGE="Hey @$PR_AUTHOR, thanks for merging your PR! Don't forget to deploy it by following [these steps](https://github.com/Automattic/woocommerce-payments-server/#deploying)."
           fi
           # Use the GitHub API to create a comment on the PR to ping the author
-          curl -X POST -H "Authorization: Bearer ${{ secrets.PAT_TOKEN }}" \
+          curl -X POST -H "Authorization: Bearer ${{ secrets.NEW_PAT_TOKEN }}" \
                -H "Accept: application/vnd.github.v3+json" \
                -d "{\"body\":\"$MESSAGE\"}" \
                "https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/comments"
