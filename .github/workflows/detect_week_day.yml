@@ -2,7 +2,7 @@ name: Deploy reminder
 
 on:
   pull_request:
-    types: [merged]
+    types: [closed]
 
 jobs:
   detect-wednesday:
