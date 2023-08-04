@@ -24,8 +24,13 @@ jobs:
           else
             MESSAGE="Today is not Friday!"
           fi
-          # Use the GitHub API to create a comment on the PR to ping the author
-          curl -X POST -H "Authorization: Bearer ${{ secrets.NEW_PAT_TOKEN }}" \
-               -H "Accept: application/vnd.github.v3+json" \
-               -d "{\"body\":\"$MESSAGE\",\"github.actor\":\"github-actions[bot]\"}" \
-               "https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/comments"
+          # Use the Octokit library to create a comment on the PR to ping the author
+          import octokit from '@octokit/core'
+          client = octokit.rest.createClient({
+            auth: 'bearer ${{ secrets.NEW_PAT_TOKEN }}'
+          })
+          client.issues.createComment({
+            issue_number: PR_NUMBER,
+            body: MESSAGE,
+            github_actor: 'github-actions[bot]'
+          })
