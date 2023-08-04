@@ -2,7 +2,7 @@ name: Deploy reminder
 
 on:
   pull_request:
-    types: [merged]
+    types: [synchronize]
 
 jobs:
   detect-wednesday:
@@ -27,5 +27,5 @@ jobs:
           # Use the GitHub API to create a comment on the PR to ping the author
           curl -X POST -H "Authorization: Bearer ${{ secrets.NEW_PAT_TOKEN }}" \
                -H "Accept: application/vnd.github.v3+json" \
-               -d "{\"body\":\"$MESSAGE\"}" \
+               -d "{\"body\":\"$MESSAGE\",\"github.actor\":\"github-actions[bot]\"}" \
                "https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/comments"
