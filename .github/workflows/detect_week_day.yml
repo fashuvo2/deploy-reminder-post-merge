@@ -26,11 +26,6 @@ jobs:
           else
             echo "MESSAGE=Today is not Friday!" >> $GITHUB_ENV
           fi
-        
-      - name: Use message
-        run: |
-            echo Bismillah
-            echo $MESSAGE
 
       - name: Comment on the PR
         uses: thollander/actions-comment-pull-request@v2
