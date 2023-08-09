@@ -22,14 +22,14 @@ jobs:
           # Get the current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
           day_of_week=$(date -u +'%w')
           if [ "$day_of_week" -eq 5 ]; then
-            MESSAGE="Today is Friday!"
+            echo "MESSAGE=Today is Friday!" >> $GITHUB_ENV
           else
-            MESSAGE="Today is not Friday!"
+            echo "MESSAGE=Today is not Friday!" >> $GITHUB_ENV
           fi
           env:
             MESSAGE: ${{ steps.check-merge-status.outputs.message }}
         
       - name: Use message
         run: |
-            Bismillah
-            ${{ env.MESSAGE }}
+            echo Bismillah
+            echo $MESSAGE
