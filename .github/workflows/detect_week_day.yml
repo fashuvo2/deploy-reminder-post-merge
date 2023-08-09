@@ -22,14 +22,16 @@ jobs:
           # Get the current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
           day_of_week=$(date -u +'%w')
           if [ "$day_of_week" -eq 5 ]; then
-            echo "MESSAGE=Today is Friday!" >> $GITHUB_ENV
+            MESSAGE="Today is Friday!"
           else
-            echo "MESSAGE=Today is not Friday!" >> $GITHUB_ENV
+            MESSAGE="Today is not Friday!"
           fi
+          echo "MESSAGE=$MESSAGE" >> $GITHUB_ENV
         
       - name: Comment on the PR
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
+            Bismillah
             $MESSAGE
           pr_number: ${{ github.event.pull_request.number }}
