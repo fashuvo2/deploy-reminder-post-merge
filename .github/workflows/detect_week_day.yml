@@ -1,8 +1,8 @@
-name: Deploy reminder
+name: Detect Week Day
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, closed]
+    types: [synchronize]
 
 jobs:
   detect-wednesday:
@@ -17,10 +17,12 @@ jobs:
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
           PR_AUTHOR=${{ github.event.pull_request.user.login }}
+          # Get the current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+          day_of_week=$(date -u +'%w')
           if [ "$day_of_week" -eq 5 ]; then
-            MESSAGE="Hey @PR_AUTHOR, thanks for merging your PR! Please deploy it on Monday unless it's critical."
+            MESSAGE="Today is Friday!"
           else
-            MESSAGE="Hey @$PR_AUTHOR, thanks for merging your PR! Don't forget to deploy it by following [these steps](https://github.com/Automattic/woocommerce-payments-server/#deploying)."
+            MESSAGE="Today is not Friday!"
           fi
           # Use the GitHub API to create a comment on the PR to ping the author
           uses: peter-evans/create-or-update-comment@v3

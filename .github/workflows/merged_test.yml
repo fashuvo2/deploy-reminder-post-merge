@@ -1,0 +1,20 @@
+name: Merged Test
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+jobs:
+  is-merged:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check merge status
+        if: ${{ github.event.pull_request.merged }} == 'true'
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          PR_AUTHOR=${{ github.event.pull_request.user.login }}
+          echo "The PR (#$PR_NUMBER) by @$PR_AUTHOR was merged"
