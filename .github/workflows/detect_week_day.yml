@@ -31,3 +31,11 @@ jobs:
         run: |
             echo Bismillah
             echo $MESSAGE
+
+      - name: Comment on the PR
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            Bismillah
+            $MESSAGE
+          pr_number: ${{ github.event.pull_request.number }}
