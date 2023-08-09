@@ -1,4 +1,4 @@
-name: Detect Week Day
+name: Detect Day of the Week
 
 on:
   pull_request:
