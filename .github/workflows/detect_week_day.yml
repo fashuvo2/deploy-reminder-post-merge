@@ -26,8 +26,6 @@ jobs:
           else
             echo "MESSAGE=Today is not Friday!" >> $GITHUB_ENV
           fi
-          env:
-            MESSAGE: ${{ steps.check-merge-status.outputs.message }}
         
       - name: Use message
         run: |
