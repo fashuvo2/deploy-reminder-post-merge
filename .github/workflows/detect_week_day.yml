@@ -29,10 +29,7 @@ jobs:
           env:
             MESSAGE: ${{ steps.check-merge-status.outputs.message }}
         
-      - name: Comment on the PR
-        uses: thollander/actions-comment-pull-request@v2
-        with:
-          message: |
+      - name: Use message
+        run: |
             Bismillah
             ${{ env.MESSAGE }}
-          pr_number: ${{ github.event.pull_request.number }}
