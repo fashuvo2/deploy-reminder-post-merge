@@ -2,7 +2,7 @@ name: Detect Week Day
 
 on:
   pull_request:
-    types: [synchronize]
+    types: [closed]
 
 jobs:
   detect-wednesday:
