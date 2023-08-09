@@ -17,11 +17,10 @@ jobs:
       - name: Check merge status
         if: ${{ github.event.pull_request.merged }} == 'false'
         run: |
-          PR_NUMBER=${{ github.event.pull_request.number }}
           PR_AUTHOR=${{ github.event.pull_request.user.login }}
           # Get the current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
           day_of_week=$(date -u +'%w')
-          if [ "$day_of_week" -eq 5 ]; then
+          if [ "$day_of_week" -eq 3 ]; then
             echo "MESSAGE=Hey @PR_AUTHOR, thanks for merging your PR! Please deploy it on Monday unless it's critical." >> $GITHUB_ENV
           else
             echo "MESSAGE=Hey @$PR_AUTHOR, thanks for merging your PR! Don't forget to deploy it by following [these steps](https://github.com/Automattic/woocommerce-payments-server/#deploying)." >> $GITHUB_ENV
@@ -30,7 +29,5 @@ jobs:
       - name: Comment on the PR
         uses: thollander/actions-comment-pull-request@v2
         with:
-          message: |
-            Bismillah
-            ${{ env.MESSAGE }}
+          message: ${{ env.MESSAGE }}
           pr_number: ${{ github.event.pull_request.number }}
