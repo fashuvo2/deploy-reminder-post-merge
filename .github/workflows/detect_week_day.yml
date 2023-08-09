@@ -1,12 +1,14 @@
 name: Detect Week Day
 
 on:
-  pull_request_target:
+  pull_request:
     types: [synchronize]
 
 jobs:
   detect-wednesday:
     runs-on: ubuntu-latest
+    permissions: 
+     pull-requests: write 
 
     steps:
       - name: Checkout code
