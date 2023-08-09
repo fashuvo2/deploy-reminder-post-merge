@@ -26,12 +26,13 @@ jobs:
           else
             MESSAGE="Today is not Friday!"
           fi
-          echo "MESSAGE=$MESSAGE" >> $GITHUB_ENV
+          env:
+            MESSAGE: ${{ steps.check-merge-status.outputs.message }}
         
       - name: Comment on the PR
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
             Bismillah
-            $MESSAGE
+            ${{ env.MESSAGE }}
           pr_number: ${{ github.event.pull_request.number }}
