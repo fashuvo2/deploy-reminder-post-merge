@@ -1,11 +1,11 @@
-name: Detect Day of the Week
+name: Deploy reminder
 
 on:
   pull_request:
     types: [closed]
 
 jobs:
-  detect-wednesday:
+  deploy-reminder:
     runs-on: ubuntu-latest
     permissions: 
      pull-requests: write 
