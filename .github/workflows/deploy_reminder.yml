@@ -2,7 +2,7 @@ name: Deploy reminder
 
 on:
   pull_request:
-    types: [synchronize, closed]
+    types: [opened, synchronize, reopened, closed]
 
 jobs:
   deploy-reminder:
