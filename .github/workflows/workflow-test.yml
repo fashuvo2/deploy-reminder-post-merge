@@ -1,0 +1,17 @@
+name: Deploy reminder
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+jobs:
+  deploy-reminder:
+    runs-on: ubuntu-latest
+
+  use-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print some info
+        run: |
+          SOME_INFO = "some-info-here"
+          echo SOME_INFO
