@@ -8,8 +8,6 @@ jobs:
   test-workflow-job:
     runs-on: ubuntu-latest
 
-  use-data:
-    runs-on: ubuntu-latest
     steps:
       - name: Print some info
         run: |
