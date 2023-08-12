@@ -11,5 +11,5 @@ jobs:
     steps:
       - name: Print some info
         run: |
-          SOME_INFO = "some-info-here"
+          SOME_INFO="some-info-here"
           echo $SOME_INFO
