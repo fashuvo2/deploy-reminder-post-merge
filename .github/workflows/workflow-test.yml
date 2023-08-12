@@ -1,11 +1,11 @@
-name: Deploy reminder
+name: Test workflow
 
 on:
   pull_request:
     types: [opened, synchronize, reopened, closed]
 
 jobs:
-  deploy-reminder:
+  test-workflow-job:
     runs-on: ubuntu-latest
 
   use-data:
