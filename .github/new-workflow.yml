@@ -1,0 +1,28 @@
+name: Detect PR Status
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+jobs:
+  detect_pr_status:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check PR status
+        id: pr_status
+        run: echo "::set-output name=ready_to_merge::${{ github.event.pull_request.mergeable }}"
+
+      - name: Check PR merged state
+        id: pr_merged_state
+        run: echo "::set-output name=merged::${{ github.event.pull_request.merged }}"
+
+      - name: Check PR merged timestamp
+        id: pr_merged_timestamp
+        if: steps.pr_merged_state.outputs.merged == 'true'
+        run: echo "::set-output name=merged_timestamp::${{ github.event.pull_request.merged_at }}"
+
+      - name: Display PR status
+        run: |
+          echo "Ready to Merge: ${{ steps.pr_status.outputs.ready_to_merge }}"
+          echo "Merged: ${{ steps.pr_merged_state.outputs.merged }}"
+          echo "Merged Timestamp: ${{ steps.pr_merged_timestamp.outputs.merged_timestamp }}"
