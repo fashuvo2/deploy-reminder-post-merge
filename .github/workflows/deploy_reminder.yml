@@ -38,4 +38,4 @@ jobs:
           PR_ID: ${{ github.event.pull_request.number }}
           message: ${{ env.MESSAGE }}
         run: |
-          gh pr comment https://github.com/fashuvo2/deploy-reminder-post-merge/pull/$PR_ID --body $message
+          gh pr comment https://github.com/fashuvo2/deploy-reminder-post-merge/pull/$PR_ID --body "$message"
