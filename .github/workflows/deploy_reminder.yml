@@ -36,5 +36,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_ID: ${{ github.event.pull_request.number }}
+          message: ${{ env.MESSAGE }}
         run: |
-          gh pr comment https://github.com/fashuvo2/deploy-reminder-post-merge/pull/$PR_ID --body ${{ env.MESSAGE }}
+          gh pr comment https://github.com/fashuvo2/deploy-reminder-post-merge/pull/$PR_ID --body $message
