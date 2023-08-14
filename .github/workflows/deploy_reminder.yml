@@ -37,4 +37,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_ID: ${{ github.event.pull_request.number }}
         run: |
-          gh pr comment https://github.com/Automattic/woocommerce-payments/pull/$PR_ID --body "Test comment from the GH CLI"
+          # gh pr comment https://github.com/Automattic/woocommerce-payments/pull/$PR_ID --body "Test comment from the GH CLI"
+          gh pr comment 11 --body "Test comment from the GH CLI"
+          
