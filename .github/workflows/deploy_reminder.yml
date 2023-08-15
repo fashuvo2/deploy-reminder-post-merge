@@ -1,6 +1,6 @@
 name: Deploy reminder
 
-on: push
+on:
   pull_request:
     types: [opened, synchronize, reopened, closed]
 
