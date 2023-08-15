@@ -1,14 +1,14 @@
 name: Deploy reminder
 
 on: push
-  # pull_request:
-    # types: [opened, synchronize, reopened, closed]
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
 
 jobs:
   deploy-reminder:
     runs-on: ubuntu-latest
-    # permissions:
-    #   pull-requests: write
+    permissions:
+      pull-requests: write
 
     steps:
       - name: Checkout code
