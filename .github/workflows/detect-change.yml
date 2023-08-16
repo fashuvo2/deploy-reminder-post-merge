@@ -1,0 +1,37 @@
+name: Detect Folder Changes
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  detect-folder-changes:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2.4.3
+
+      - name: List changed files
+        id: list-changes
+        run: |
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+
+      - name: Check for changes in "test" folder
+        run: |
+          if echo "$CHANGED_FILES" | grep -qE '^test/'; then
+            echo "message=Changes detected in the 'test' folder!"
+            # Add your desired actions or commands here
+          else
+            echo "message=No changes detected in the 'test' folder."
+          fi
+
+      - name: Add comment to PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_ID: ${{ github.event.pull_request.number }}
+          message: ${{ env.MESSAGE }}
+        run: |
+          gh pr comment https://github.com/fashuvo2/deploy-reminder-post-merge/pull/$PR_ID --body="$message"
