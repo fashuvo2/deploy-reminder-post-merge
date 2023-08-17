@@ -23,14 +23,12 @@ jobs:
       - name: Print changed files
         if: steps.check-for-changes.outputs.test_any_changed == 'true'
         run: |
-          echo "Changes detected in the 'test' folder!"
-          echo "message=Changes detected in the 'test' folder!" >> $GITHUB_ENV
+          echo "message=Changes detected in the `test` folder!" >> $GITHUB_ENV
 
       - name: Print no changes message
         if: steps.check-for-changes.outputs.test_any_changed != 'true'
         run: |
-          echo "No changes detected in the 'test' folder!"
-          echo "message=No changes detected in the 'test' folder!" >> $GITHUB_ENV
+          echo "message=No changes detected in the `test` folder!" >> $GITHUB_ENV
           
       - name: Add comment to PR
         env:
