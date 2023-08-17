@@ -24,7 +24,12 @@ jobs:
         if: steps.check-for-changes.outputs.test_any_changed == 'true'
         run: |
           echo "message=Changes detected in the 'test' folder!"
-      
+
+      - name: Print no changes message
+        if: steps.check-for-changes.outputs.test_any_changed != 'true'
+        run: |
+          echo "message=No changes detected in the 'test' folder!"
+          
       - name: Add comment to PR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
