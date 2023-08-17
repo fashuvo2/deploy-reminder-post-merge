@@ -1,4 +1,4 @@
-name: Detect Folder Changes
+gename: Detect Folder Changes
 
 on:
   pull_request:
@@ -34,6 +34,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_ID: ${{ github.event.pull_request.number }}
-          message: ${{ env.MESSAGE }}
+          message: ${{ env.message }}
         run: |
           gh pr comment https://github.com/fashuvo2/deploy-reminder-post-merge/pull/$PR_ID --body="$message"
