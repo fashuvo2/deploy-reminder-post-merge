@@ -1,4 +1,4 @@
-gename: Detect Folder Changes
+name: Detect Folder Changes
 
 on:
   pull_request:
