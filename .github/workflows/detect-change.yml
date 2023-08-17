@@ -18,7 +18,7 @@ jobs:
         id: check-for-changes
         uses: tj-actions/changed-files@v37
         with:
-          files: 'test/**'
+          files: test/**
 
       - name: Print changed files
         if: steps.check-for-changes.outputs.test_any_changed == 'true'
