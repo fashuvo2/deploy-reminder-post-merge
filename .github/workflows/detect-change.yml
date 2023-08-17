@@ -14,20 +14,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         
-      - name: List changed files
-        id: list-changes
-        run: |
-          CHANGED_FILES=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}")
+      - name: Check for changes
+        uses: actions/changed-files@v2
+        with:
+          paths: 'test/**'
 
-      - name: Check for changes in "test" folder
+      - name: Print changed files
+        if: steps.check-for-changes.outputs.changed == 'true'
         run: |
-          if echo "$CHANGED_FILES" | grep -qE '^test/'; then
-            echo "message=Changes detected in the 'test' folder!"
-            # Add your desired actions or commands here
-          else
-            echo "message=No changes detected in the 'test' folder."
-          fi
-
+          echo "message=Changes detected in the 'test' folder!"
+      
       - name: Add comment to PR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
