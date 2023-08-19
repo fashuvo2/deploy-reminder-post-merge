@@ -13,27 +13,33 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: List all changed files
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
         
-      - name: Check for changes
-        id: check-for-changes
-        uses: tj-actions/changed-files@v37
-        with:
-          files: test/
+      # - name: Check for changes
+      #   id: check-for-changes
+      #   uses: tj-actions/changed-files@v37
+      #   with:
+      #     files: test/
 
-      - name: Print changed files
-        if: steps.check-for-changes.outputs.test_any_changed == 'true'
-        run: |
-          echo "message=Changes detected in the `test` folder!" >> $GITHUB_ENV
+      # - name: Print changed files
+      #   if: steps.check-for-changes.outputs.test_any_changed == 'true'
+      #   run: |
+      #     echo "message=Changes detected in the `test` folder!" >> $GITHUB_ENV
 
-      - name: Print no changes message
-        if: steps.check-for-changes.outputs.test_any_changed != 'true'
-        run: |
-          echo "message=No changes detected in the `test` folder!" >> $GITHUB_ENV
+      # - name: Print no changes message
+      #   if: steps.check-for-changes.outputs.test_any_changed != 'true'
+      #   run: |
+      #     echo "message=No changes detected in the `test` folder!" >> $GITHUB_ENV
           
-      - name: Add comment to PR
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_ID: ${{ github.event.pull_request.number }}
-          message: ${{ env.message }}
-        run: |
-          gh pr comment https://github.com/fashuvo2/deploy-reminder-post-merge/pull/$PR_ID --body="$message"
+      # - name: Add comment to PR
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     PR_ID: ${{ github.event.pull_request.number }}
+      #     message: ${{ env.message }}
+      #   run: |
+      #     gh pr comment https://github.com/fashuvo2/deploy-reminder-post-merge/pull/$PR_ID --body="$message"
