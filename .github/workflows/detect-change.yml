@@ -25,8 +25,9 @@ jobs:
       - name: Run step if any file(s) in the docs folder change
         if: steps.changed-files-specific.outputs.any_changed == 'true'
         run: |
-          echo "One or more files in the docs folder has changed."
-          echo "List all the files that have changed: ${{ steps.changed-files-specific.outputs.all_changed_files }}"
+          echo "message=Changes detected in the `test` folder!" >> $GITHUB_ENV
+          # echo "One or more files in the docs folder has changed."
+          # echo "List all the files that have changed: ${{ steps.changed-files-specific.outputs.all_changed_files }}"
         
       # - name: Check for changes
       #   id: check-for-changes
@@ -44,10 +45,10 @@ jobs:
       #   run: |
       #     echo "message=No changes detected in the `test` folder!" >> $GITHUB_ENV
           
-      # - name: Add comment to PR
-      #   env:
-      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     PR_ID: ${{ github.event.pull_request.number }}
-      #     message: ${{ env.message }}
-      #   run: |
-      #     gh pr comment https://github.com/fashuvo2/deploy-reminder-post-merge/pull/$PR_ID --body="$message"
+      - name: Add comment to PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_ID: ${{ github.event.pull_request.number }}
+          message: ${{ env.message }}
+        run: |
+          gh pr comment https://github.com/fashuvo2/deploy-reminder-post-merge/pull/$PR_ID --body="$message"
