@@ -24,7 +24,7 @@ jobs:
 
       - name: Run step if any file(s) in the docs folder change
         run: |
-          if if: steps.changed-files-specific.outputs.any_changed == 'true'; then
+          if: steps.changed-files-specific.outputs.any_changed == 'true'; then
             echo "message=Changes detected in the `test` folder!" >> $GITHUB_ENV
           else
             echo "message=No changes detected in the `test` folder!" >> $GITHUB_ENV
