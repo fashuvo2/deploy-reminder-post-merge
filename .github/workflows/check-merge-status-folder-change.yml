@@ -1,0 +1,43 @@
+name: Check merge status and folder changes
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+jobs:
+  deploy-reminder:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get changed files in the test folder
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v39
+        with:
+          files: test/**
+
+      - name: Check merge status
+        if: ${{ github.event.pull_request.merged }} == 'false' && steps.changed-files-specific.outputs.any_changed == 'true'
+        run: |
+          PR_AUTHOR=${{ github.event.pull_request.user.login }}
+          # Get the current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+          DAY_OF_WEEK=$(date -u +'%w')
+          if [ "$DAY_OF_WEEK" -eq 5 ] || [ "$DAY_OF_WEEK" -eq 6 ] || [ "$DAY_OF_WEEK" -eq 0 ]; then
+            echo "MESSAGE=Hey @$PR_AUTHOR, thanks for merging your PR! Please deploy it on Monday unless it's critical." >> $GITHUB_ENV
+          else
+            echo "MESSAGE=Hey @$PR_AUTHOR, thanks for merging your PR! Don't forget to deploy it by following [these steps](https://github.com/Automattic/woocommerce-payments-server/#deploying)." >> $GITHUB_ENV
+          fi
+          
+      - name: Add comment to PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_ID: ${{ github.event.pull_request.number }}
+          message: ${{ env.MESSAGE }}
+        run: |
+          gh pr comment https://github.com/fashuvo2/deploy-reminder-post-merge/pull/$PR_ID --body="$message"
