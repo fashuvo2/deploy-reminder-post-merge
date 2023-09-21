@@ -3,8 +3,6 @@ name: Detect Folder Changes
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-    branches:
-      - master
 
 jobs:
   detect-folder-changes:
