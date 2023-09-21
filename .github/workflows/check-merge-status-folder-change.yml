@@ -22,6 +22,18 @@ jobs:
         with:
           files: test/**
 
+      - name: TMP Check merge status
+        if: ${{ github.event.pull_request.merged }} == 'false'
+        run: |
+          echo "TMP - PR not merged."
+          echo "MESSAGE=TMP - PR not merged." >> $GITHUB_ENV
+
+      - name: TMP Check merge status
+        if: ${{ github.event.pull_request.merged }} == 'false'
+        run: |
+          echo "TMP - PR merged."
+          echo "MESSAGE=TMP - PR merged." >> $GITHUB_ENV
+
       - name: Check merge status
         if: ${{ github.event.pull_request.merged }} == 'false' && steps.changed-files-specific.outputs.any_changed == 'true'
         run: |
