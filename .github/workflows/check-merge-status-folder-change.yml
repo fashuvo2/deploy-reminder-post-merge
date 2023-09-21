@@ -41,6 +41,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_ID: ${{ github.event.pull_request.number }}
           message: ${{ env.MESSAGE }}
-        if: ${{ env.message_exists }} == true
+          message_exists: ${{ env.message_exists }}
+        # if: ${{ env.message_exists }} == true
         run: |
-          gh pr comment https://github.com/fashuvo2/deploy-reminder-post-merge/pull/$PR_ID --body="$message"
+          # gh pr comment https://github.com/fashuvo2/deploy-reminder-post-merge/pull/$PR_ID --body="$message"
+          gh pr comment https://github.com/fashuvo2/deploy-reminder-post-merge/pull/$PR_ID --body="$message_exists"
