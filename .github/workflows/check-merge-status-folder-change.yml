@@ -28,9 +28,7 @@ jobs:
           PR_AUTHOR=${{ github.event.pull_request.user.login }}
           # Get the current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
           DAY_OF_WEEK=$(date -u +'%w')
-          # if [ "$DAY_OF_WEEK" -eq 5 ] || [ "$DAY_OF_WEEK" -eq 6 ] || [ "$DAY_OF_WEEK" -eq 0 ]; then
-            # echo "MESSAGE=Hey @$PR_AUTHOR, thanks for merging your PR! Please deploy it on Monday unless it's critical." >> $GITHUB_ENV
-          if [ "$DAY_OF_WEEK" -eq 6 ] || [ "$DAY_OF_WEEK" -eq 0 ]; then
+          if [ "$DAY_OF_WEEK" -eq 5 ] || [ "$DAY_OF_WEEK" -eq 6 ] || [ "$DAY_OF_WEEK" -eq 0 ]; then
             echo "MESSAGE=Hey @$PR_AUTHOR, thanks for merging your PR! Please deploy it on Monday unless it's critical." >> $GITHUB_ENV
           else
             echo "MESSAGE=Hey @$PR_AUTHOR, thanks for merging your PR! Don't forget to deploy it by following [these steps](https://github.com/Automattic/woocommerce-payments-server/#deploying)." >> $GITHUB_ENV
