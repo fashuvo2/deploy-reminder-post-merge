@@ -39,7 +39,7 @@ jobs:
       - name: Change comment
         if: github.event.pull_request.merged != true || steps.changed-files-specific.outputs.any_changed != 'true'
         run: |
-          echo "MESSAGE=" >> $GITHUB_ENV
+          echo "MESSAGE=''" >> $GITHUB_ENV
 
       - name: Add comment to PR
         env:
