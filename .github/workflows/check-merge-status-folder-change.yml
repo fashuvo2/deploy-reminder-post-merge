@@ -1,11 +1,11 @@
-name: Check merge status and folder changes
+name: Deployment reminder
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, closed]
+    types: [closed]
 
 jobs:
-  deploy-reminder:
+  deployment-reminder:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
@@ -16,18 +16,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get changed files in the test folder
-        id: changed-files-specific
+      - name: Get changed files in the server folder
+        id: changed-files-server
         uses: tj-actions/changed-files@v39
         with:
-          files: test/**
+          files: server/**
 
-      - name: Merged file changed
-        id: is-merged-or-changed
-        if: github.event.pull_request.merged == true && steps.changed-files-specific.outputs.any_changed == 'true'
+      - name: Check merge and file change status
+        if: github.event.pull_request.merged == true && steps.changed-files-server.outputs.any_changed == 'true'
         run: |
           PR_AUTHOR=${{ github.event.pull_request.user.login }}
-          echo "message_exists=true" >> $GITHUB_ENV
           # Get the current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
           DAY_OF_WEEK=$(date -u +'%w')
           if [ "$DAY_OF_WEEK" -eq 5 ] || [ "$DAY_OF_WEEK" -eq 6 ] || [ "$DAY_OF_WEEK" -eq 0 ]; then
